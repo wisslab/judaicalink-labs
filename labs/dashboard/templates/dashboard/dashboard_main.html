@@ -3,35 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Main</title>
+    <style>
+        .container {
+        width: 700px ;
+        margin-left: auto ;
+        margin-right: auto ;
+        padding-top: 10%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+    <script src='https://unpkg.com/vue-chartjs@2.6.0/dist/vue-chartjs.full.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js'></script>
+    <script src='https://unpkg.com/hchs-vue-charts@1.2.8'></script>
 </head>
+
 <body>
+    <div id="dashboard">
+        <section class="container">
+            <div class="columns">
+                <div class="column">
+                    <chartjs-pie :labels="labels" :data="dataset" :bind="true"></chartjs-pie>
+                </div>
+            </div>
+        </section>
+    </div>
 
-{{result}}
-<br><br><br>
-{% if result %}
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script type='text/javascript'>
-    var datasets = {{result|safe}};
-  </script>
-
-  <div id="dashboard">
-      <li v-for="data in datasets">
-          [[ data]]
-      </li>
-
-  </div>
  <!-- delimiters: Hier keine {} bei den Variablen in Vue.js um Konflikte mir der Django Syntax zu vermeiden-->
-  <script>
-    var dashboard = new Vue({
-      delimiters: ['[[', ']]'],
-      el: '#dashboard',
-      data: {
-          datasets: datasets,
-      },
-    });
-  </script>
-{% endif %}
 
-
+    <script> 'use strict';
+        var listDataslugs = {{list_dataslugs|safe}};
+        var listAmountData = {{list_amount_data|safe}};
+        Vue.use(VueCharts);
+              var dashboard = new Vue({
+                el: '#dashboard',
+                data: function data() {
+                  return {
+                    labels: listDataslugs,
+                    dataset: listAmountData
+                  };
+                },
+              });
+    </script>
 </body>
 </html>
