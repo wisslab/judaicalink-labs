@@ -9,12 +9,18 @@ import json
 
 def test(request):
     es = Elasticsearch()
+    # body = {
+    #     "from" : 0, "size" : 1000,
+    #     "query" : {
+    #         "match_all" : {}
+    #     },
+    # }
     body = {
-        "from" : 0, "size" : 1000,
+        "from" : 0, "size" : 10000,
         "query" : {
             "match_all" : {}
         },
-        }
+    }
     result = es.search(index="judaicalink", body = body)
    # dataset = []
     #for d in result ["hits"] ["hits"]:

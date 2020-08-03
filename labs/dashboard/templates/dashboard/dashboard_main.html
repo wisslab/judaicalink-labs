@@ -6,22 +6,26 @@
 </head>
 <body>
 
-{{result}}
-<br><br><br>
+<!-- {{result}} -->
 {% if result %}
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+
+  <!-- Get the data from Django -->
   <script type='text/javascript'>
     var datasets = {{result|safe}};
   </script>
 
   <div id="dashboard">
-      <li v-for="data in datasets">
-          [[ data]]
-      </li>
-
+      <bar-chart v-if="item.type === 'bar-chart' " :chart-data="datacollection" :options="options"></bar-chart>
+      <button onclick="downloadObjectAsJson(datasets, new Date());">Download Data</button>
   </div>
+
  <!-- delimiters: Hier keine {} bei den Variablen in Vue.js um Konflikte mir der Django Syntax zu vermeiden-->
   <script>
+    Vue.component(VueChartJS.Bar, VueChartJS);
+
     var dashboard = new Vue({
       delimiters: ['[[', ']]'],
       el: '#dashboard',
@@ -29,6 +33,18 @@
           datasets: datasets,
       },
     });
+
+    function downloadObjectAsJson(exportObj, exportName){
+      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+      var downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href",     dataStr);
+      downloadAnchorNode.setAttribute("download", exportName + ".json");
+      document.body.appendChild(downloadAnchorNode); // required for firefox
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+    }
+
+
   </script>
 {% endif %}
 

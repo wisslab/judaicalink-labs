@@ -48,8 +48,7 @@ INSTALLED_APPS = [
     'lodjango',
     'dashboard',
     'api',
-    'rest_framework',
-    'corsheaders'
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -60,14 +59,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-]
-
-
-# Allow cross origin for certain urls
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8080'
 ]
 
 ROOT_URLCONF = 'labs.urls'
