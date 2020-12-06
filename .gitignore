@@ -13,6 +13,8 @@ labs/secret_key.txt
 labs/labs/localsettings.py
 htpasswd
 
+*.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'lodjango',
     'dashboard',
     'data',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
