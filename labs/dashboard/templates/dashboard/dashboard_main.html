@@ -7,7 +7,7 @@
     <title>Dashboard Main</title>
     <style>
         .container {
-        width: 700px ;
+        width: 50% ;
         margin-left: auto ;
         margin-right: auto ;
         padding-top: 10%;
@@ -15,32 +15,19 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
-    <script src='https://unpkg.com/vue-chartjs@2.6.0/dist/vue-chartjs.full.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js'></script>
-    <script src='https://unpkg.com/hchs-vue-charts@1.2.8'></script>
 </head>
 
 <body>
+    <div class="container">
+        <canvas id="chartBirthPerYear">
 
-    <div id="dashboard">
-        <div class="form-group row">
-            <div class="col-10">
-                <input class="form-control" value="0" type="number" id="lowerBound">
-                <input class="form-control" value="2000" type="number" id="upperBound">
-                <button v-on:click="updateChart()" type="button" class="btn btn-success">Go</button>
-            </div>
-        </div>
-
-        <section class="container">
-            <div class="columns">
-                <div class="column">
-                    <chartjs-bar :labels="labels" :data="dataset" :bind="true"></chartjs-bar>
-                </div>
-            </div>
-        </section>
+        </canvas>
+        <input class="form-control" type="number" id="lowerYear">
+        <input class="form-control" type="number" id="upperYear">
+        <button onclick="updateChart()">Click me</button>
     </div>
 
- <!-- delimiters: Hier keine {} bei den Variablen in Vue.js um Konflikte mir der Django Syntax zu vermeiden-->
 <script>
     var dicAggregation = {{aggregation|safe}};
 </script>

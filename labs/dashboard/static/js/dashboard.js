@@ -1,64 +1,67 @@
-//'use strict';
+function selectData() {
 
-        //var dicAggregation = {{aggregation|safe}};
-        //console.log(dicAggregation);
-        var lowerBound = document.getElementById("lowerBound").value;
-        var upperBound = document.getElementById("upperBound").value;
-        var selection = [];
+    var birthYears = [];
+    var amountOfPeople = [];
 
-        dicAggregation.forEach(createSelection);
-            function createSelection(dict) {
-                if (dict.key > lowerBound && dict.key < upperBound)
-                    selection.push (dict);
-            }
+    dicAggregation.forEach(createLists);
+        function createLists(dict) {
+            birthYears.push (dict.key);
+            amountOfPeople.push (dict.doc_count);
+        }
 
-        var birthYears = [];
-        var amountOfPeople = [];
+    return {
+        birthYears: birthYears,
+        amountOfPeople: amountOfPeople,
+    };
+}
 
-        selection.forEach(createLists);
-            function createLists(dict) {
-                birthYears.push (dict.key);
-                amountOfPeople.push (dict.doc_count);
-            }
+var ctx = document.getElementById('chartBirthPerYear').getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: selectData().birthYears,
+        datasets: [{
+            label: 'Amount of People born per Year',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: selectData().amountOfPeople
+        }]
+    },
+    options: {}
+});
 
-        console.log (birthYears);
-        console.log (amountOfPeople);
+function updateChart() {
+    var lowerYear = document.getElementById("lowerYear").value.trim();
+    var upperYear = document.getElementById("upperYear").value.trim();
 
-        Vue.use(VueCharts);
-            var dashboard = new Vue({
-                el: '#dashboard',
-                mounted() {
-                    this.updateChart();
-                },
-                data: function data() {
-                    return {
-                        labels: birthYears,
-                        dataset: amountOfPeople
-                    };
-                },
-                methods: {
-                    updateChart: function() {
-                        var lowerBound = document.getElementById("lowerBound").value;
-                        var upperBound = document.getElementById("upperBound").value;
-                        var selection = [];
+    if (lowerYear == "") {
+        var lowerYear = dicAggregation[0].key;
+    }
+    if (upperYear == "") {
+        var upperYear = dicAggregation[dicAggregation.length - 1].key;
+    }
 
-                        dicAggregation.forEach(createSelection);
-                            function createSelection(dict) {
-                                if (dict.key > lowerBound && dict.key < upperBound)
-                                    selection.push (dict);
-                            }
+    var selection = [];
 
-                        var birthYears = [];
-                        var amountOfPeople = [];
+    dicAggregation.forEach(createSelection);
+        function createSelection(dict) {
+            if (dict.key > lowerYear && dict.key < upperYear)
+                selection.push (dict);
+        }
 
-                        selection.forEach(createLists);
-                            function createLists(dict) {
-                                birthYears.push (dict.key);
-                                amountOfPeople.push (dict.doc_count);
-                            }
-                        this.labels = birthYears;
-                        this.dataset = amountOfPeople;
-                        //this.update();
-                    }
-                }
-            });
+    var birthYears = [];
+    var amountOfPeople = [];
+
+    selection.forEach(createLists);
+        function createLists(dict) {
+            birthYears.push (dict.key);
+            amountOfPeople.push (dict.doc_count);
+        }
+
+    chart.data.datasets[0].data = amountOfPeople;
+    chart.data.labels = birthYears;
+    chart.update();
+}
+
+
+
