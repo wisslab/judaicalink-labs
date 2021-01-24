@@ -1,8 +1,32 @@
 The following fields are searchable for you: <br>
-name, Alternatives, birthDate, birthLocation, deathDate, deathLocation, Abstract, Publication<br>
+name, Alternatives, birthDate, birthLocation, deathDate, deathLocation, Abstract, Publication (not available is the field birthYear)<br>
 
 To search in a specific field use the correct syntax:<br>
-fieldname:query<br>
+<strong>fieldname:</strong>keyword<br>
 Example: birthLocation:hamburg<br>
-This query will return all entities with the word 'hamburg' in the field birthLocation<br>
+This query will return all entities with the word 'hamburg' in the field birthLocation.<br>
 Please note that the fieldnames have to be spelled correctly in order for your search to work.<br>
+<br>
+---<br>
+<br>
+AND, OR, NOT operators can be used in your query<br>
+To search with operators use the correct syntax:<br>
+keyword <strong>operator</strong> keyword<br>
+Example: stuttgart AND hamburg<br>
+This query will return all entities with the word 'hamburg' and 'stuttgart' in any field.<br>
+<br>
+---<br>
+<br>
+Wildcards<br>
+? can be used to replace one character<br>
+* can be used to replace zero or more characters<br>
+Examples: birthDate:10*, fel?mann<br>
+<br>
+---<br>
+<br>
+Range Queries<br>
+Not implemented (yet?).<br>
+<br>
+---<br>
+<br>
+
